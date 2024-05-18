@@ -1,0 +1,7 @@
+# model
+gpt2_model/
+
+# dataset
+wikitext-103-raw/
+ruozhiba_ruozhiba_ruozhiba.jsonl
+
