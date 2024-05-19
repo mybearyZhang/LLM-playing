@@ -38,7 +38,9 @@ def main(args):
     input_texts = {
         'story': "In a distant kingdom, a young wizard discovered an ancient book of spells. One day, he decided to try one of the spells from the book, and as a result...",
         'conversation': "Reporter: Can you tell us how you began your career as an artist? Artist: It all started with a chance encounter when I was a child...",
-        'poetry': "The morning sun casts its glow upon the lake, a gentle breeze stirs, carrying the scent of blossoms. The longing in my heart, like the ripples on the water..."
+        'poetry': "The morning sun casts its glow upon the lake, a gentle breeze stirs, carrying the scent of blossoms. The longing in my heart, like the ripples on the water...",
+        'news': "Tech giant Apple has just unveiled its latest innovation:...",
+        'knowledge': "The theory of evolution, first proposed by Charles Darwin, suggests that..."
     }
     
     # 获取选择的 input_text

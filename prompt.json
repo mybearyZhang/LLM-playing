@@ -25,5 +25,23 @@
             "I feel the warmth of the lake and the warmth of the air.",
             "is the same as the longing in my heart."
         ]
+    },
+    {
+        "type": "news",
+        "content": "Tech giant Apple has just unveiled its latest innovation:...",
+        "answers": [
+            "<|endoftext|>The U.",
+            "<|endoftext|>A new study finds that the number of children born to mothers who are obese is increasing in the United States.",
+            "a new iPhone 5S."
+        ]
+    },
+    {
+        "type": "knowledge",
+        "content": "The theory of evolution, first proposed by Charles Darwin, suggests that...",
+        "answers": [
+            "...the evolution of the human body is a process of evolution.",
+            "[the] evolution of the human species is based on the fact that the human species evolved from a single ancestor to a new species of animal.",
+            "the evolution of the universe is a process of evolution, and that the evolution of the universe is a process of evolution."
+        ]
     }
 ]
