@@ -66,3 +66,9 @@ Here is an example command to evaluate the GPT-2 model:
 ```bash
 python eval.py --model_name "gpt2" --prompt "story"
 ```
+
+Furthermore, we provide a script to evaluate the outputs of the model judged by OpenAI. Before testing, fill the prompts and the outputs into the `prompt.json`. To run the script, use the following command format:
+
+```bash
+python llm_test.py
+```
