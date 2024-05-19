@@ -1,7 +1,14 @@
 # model
 gpt2_model/
+checkpoints/
+runs/
+*.pkl
 
 # dataset
 wikitext-103-raw/
 ruozhiba_ruozhiba_ruozhiba.jsonl
+wikitext-2/
 
+# logs
+logs/
+wandb/
