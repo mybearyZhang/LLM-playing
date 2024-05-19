@@ -3,6 +3,7 @@ gpt2_model/
 checkpoints/
 runs/
 *.pkl
+epoch40/
 
 # dataset
 wikitext-103-raw/

@@ -1,9 +1,3 @@
-from transformers import AutoTokenizer, GPT2LMHeadModel, AutoConfig
-from transformers import GPT2Tokenizer, GPT2Model, AutoModel
-from transformers import DataCollatorForLanguageModeling
-from transformers import Trainer, TrainingArguments
-from transformers import LineByLineTextDataset
-
 import torch
 import math
 import os
@@ -13,8 +7,13 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 import pickle
 from time import time
-
 import wandb
+from transformers import AutoTokenizer, GPT2LMHeadModel, AutoConfig
+from transformers import GPT2Tokenizer, GPT2Model, AutoModel
+from transformers import DataCollatorForLanguageModeling
+from transformers import Trainer, TrainingArguments
+from transformers import LineByLineTextDataset
+
 
 # 初始化wandb，填入你的API密钥和项目名称
 wandb.init(project='GPT2 finetune', config={"x-axis": "epoch"})
@@ -39,7 +38,7 @@ out_model_path = "mygpt"
 train_epoches = 40
 batch_size = 8
 num_worker = 4
-lr = 1e-1
+lr = 1e-3
 weight_decay = 1e-8
 warmup = 2000
 
