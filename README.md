@@ -59,7 +59,7 @@ python eval.py [arguments]
 Here are the available command-line arguments you can use:
 
 + `--model_name`: Pretrained model name or path (default: "gpt2").
-+ `--prompt`: Prompt for text generation, chosen from `['story', 'conversation', 'poetry']`.
++ `--prompt`: Prompt for text generation, chosen from `['news', 'knowledge', 'story', 'conversation', 'poetry']`.
 
 Here is an example command to evaluate the GPT-2 model:
 
