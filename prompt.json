@@ -1,0 +1,29 @@
+[
+    {
+        "type": "story",
+        "content": "In a distant kingdom, a young wizard discovered an ancient book of spells. One day, he decided to try one of the spells from the book, and as a result...",
+        "answers": [
+            "he was surprised to find that it was a spell called “The Great Seal.” The Great Seal is a spell that allows a wizard to seal a target's soul.",
+            "he was surprised to find that it contained a spell that could be used to summon a dragon.",
+            "he was enchanted."
+        ]
+    },
+    {
+        "type": "conversation",
+        "content": "Reporter: Can you tell us how you began your career as an artist? Artist: It all started with a chance encounter when I was a child...",
+        "answers": [
+            "I was in a band called The Black Keys.",
+            "I was in a school dance class and I was playing with a group of girls and I was playing with a group of boys and I was playing with a group of girls and I was playing with a group of boys and I was playing with a group",
+            " I was a little kid, and I was a little kid, and I was a little kid, and I was a little kid, and I was a little kid, and I was a little kid, and I was a little kid, and I"
+        ]
+    },
+    {
+        "type": "poetry",
+        "content": "The morning sun casts its glow upon the lake, a gentle breeze stirs, carrying the scent of blossoms. The longing in my heart, like the ripples on the water...",
+        "answers": [
+            "I am a girl, a girl who has been born to be a girl.",
+            "I feel the warmth of the lake and the warmth of the air.",
+            "is the same as the longing in my heart."
+        ]
+    }
+]
