@@ -5,8 +5,8 @@ This project allows users to finetune Large Language Models (LLMs) on custom dat
 ## Table of Contents
 
 - [Installation](#installation)
-- [Finetune](#finetune)
-- [Evaluate](#evaluate)
+- [Finetuning](#finetuning)
+- [Evaluation](#evaluation)
 
 ## Installation
 
@@ -23,7 +23,7 @@ cd LLM-playing
 pip install -r requirements.txt
 ```
 
-## Finetune
+## Finetuning
 To run the fine-tuning script of the model, use the following command format:
 
 ```bash
@@ -49,7 +49,7 @@ Here is an example commands to fine-tune the GPT-2 model:
 python finetune.py --model_name "gpt2" --dataset "wiki2" --lr 1e-2 --weight_decay 1e-8 --warmup 2000 --train_epoches 30 --batch_size 8 --num_worker 4 --max_seq_length 512 --out_model_path "mygpt"
 ```
 
-## Evaluate
+## Evaluation
 To run the evaluation script of the model, use the following command format:
 
 ```bash
@@ -67,7 +67,7 @@ Here is an example command to evaluate the GPT-2 model:
 python eval.py --model_name "gpt2" --prompt "story"
 ```
 
-Furthermore, we provide a script to evaluate the outputs of the model judged by OpenAI. Before testing, fill the prompts and the outputs into the `prompt.json`. To run the script, use the following command format:
+Furthermore, we provide a script to evaluate the outputs of the model judged by a LLM. Before testing, fill the prompts and the outputs into the `prompt.json`. To run the script, use the following command format:
 
 ```bash
 python llm_test.py
