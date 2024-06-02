@@ -18,3 +18,6 @@ COIG-CQIA/
 # logs
 logs/
 wandb/
+
+# python cache
+**/__pycache__/

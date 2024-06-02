@@ -144,7 +144,7 @@ def main(args):
         print(f"Validation loss: {eval_loss} in epoch {epoch + 1}.")
         print(f"Perplexity: {perplexity} in epoch {epoch + 1}.")
         
-        if (epoch + 1) % 5 == 0:
+        if args.save_steps > 0 and (epoch + 1) % args.save_steps == 0:
             ckp_path = os.path.join(out_model_path, 'checkpoints', f"epoch{epoch + 1}")
             if not os.path.exists(ckp_path):
                 os.makedirs(ckp_path)
@@ -163,6 +163,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=8, help="Batch size")
     parser.add_argument("--num_worker", type=int, default=4, help="Number of workers for DataLoader")
     parser.add_argument("--max_seq_length", type=int, default=512, help="Maximum sequence length")
+    parser.add_argument("--save_steps", type=int, default=0, help="Save model every n steps, 0 to disable")
     parser.add_argument("--out_model_path", type=str, default="mygpt", help="Output model path")
     parser.add_argument("--wandb", action='store_false', help="Use wandb or not")
     parser.add_argument("--dataset_name", type=str, default="ruozhiba", help="Subset for Chinese Dataset")
