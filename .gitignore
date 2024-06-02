@@ -4,6 +4,9 @@ checkpoints/
 runs/
 *.pkl
 epoch40/
+LongformerGPT2/gpt2_model
+LongformerGPT2/longformer-base-4096
+LongformerGPT2/longformer_gpt2_model
 
 # dataset
 wikitext-103-raw/
@@ -13,3 +16,6 @@ wikitext-2/
 # logs
 logs/
 wandb/
+
+.idea/
+*/__pycache__/
