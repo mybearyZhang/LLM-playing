@@ -1,5 +1,8 @@
 # model
 gpt2_model/
+gpt2-chinese-cluecorpussmall/
+
+# checkpoints
 checkpoints/
 runs/
 *.pkl
@@ -12,10 +15,17 @@ LongformerGPT2/longformer_gpt2_model
 wikitext-103-raw/
 ruozhiba_ruozhiba_ruozhiba.jsonl
 wikitext-2/
+ruozhiba_qa.json
+COIG-CQIA/
 
 # logs
 logs/
 wandb/
 
+<<<<<<< HEAD
 .idea/
 */__pycache__/
+=======
+# python cache
+**/__pycache__/
+>>>>>>> cf7d608ef99ee9e5d946d389ded2c6cf1fe61892

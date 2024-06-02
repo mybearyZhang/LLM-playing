@@ -16,7 +16,10 @@ from transformers import Trainer, TrainingArguments
 from transformers import LineByLineTextDataset
 
 def main(args):
-    tokenizer = GPT2Tokenizer.from_pretrained('./gpt2_model')
+    if args.model_name == "chinese":
+        tokenizer = AutoTokenizer.from_pretrained('./gpt2-chinese-cluecorpussmall')
+    else:
+        tokenizer = GPT2Tokenizer.from_pretrained('./gpt2_model')
     
     model_name = args.model_name
     if model_name == "gpt2":
@@ -25,6 +28,8 @@ def main(args):
         model = GPT2LMHeadModel.from_pretrained('./epoch40')
     elif model_name == "wiki103":
         model = GPT2LMHeadModel.from_pretrained('./runs')
+    elif model_name == "chinese":
+        model = GPT2LMHeadModel.from_pretrained('./gpt2-chinese-cluecorpussmall')
 
     param_sizes = [p.numel() for p in model.parameters() if p.requires_grad]
     total_params = sum(param_sizes)
@@ -40,7 +45,9 @@ def main(args):
         'conversation': "Reporter: Can you tell us how you began your career as an artist? Artist: It all started with a chance encounter when I was a child...",
         'poetry': "The morning sun casts its glow upon the lake, a gentle breeze stirs, carrying the scent of blossoms. The longing in my heart, like the ripples on the water...",
         'news': "Tech giant Apple has just unveiled its latest innovation:...",
-        'knowledge': "The theory of evolution, first proposed by Charles Darwin, suggests that..."
+        'knowledge': "The theory of evolution, first proposed by Charles Darwin, suggests that...",
+        # 'chinese': "在一个遥远的国度，有一位年轻的法师发现了一本古老的咒语书。有一天，他决定尝试书中的一个咒语，结果",
+        'chinese': "在一个遥远的国度，有一位年轻的法师发现了一本古老的咒语书。有一天，他突然突然发现孙雨林是神，结果",
     }
     
     # 获取选择的 input_text
