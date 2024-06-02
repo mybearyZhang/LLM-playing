@@ -1,5 +1,8 @@
 # model
 gpt2_model/
+gpt2-chinese-cluecorpussmall/
+
+# checkpoints
 checkpoints/
 runs/
 *.pkl
@@ -9,6 +12,8 @@ epoch40/
 wikitext-103-raw/
 ruozhiba_ruozhiba_ruozhiba.jsonl
 wikitext-2/
+ruozhiba_qa.json
+COIG-CQIA/
 
 # logs
 logs/
