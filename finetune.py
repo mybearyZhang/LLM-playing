@@ -14,28 +14,27 @@ from transformers import GPT2Tokenizer, GPT2Model, AutoModel
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 from transformers import LineByLineTextDataset
+from datasets import load_dataset
+from utils.dataset import COIGDataset
 
 def main(args):
     # 初始化wandb，填入你的API密钥和项目名称
-    wandb.init(project='GPT2 finetune', config={"x-axis": "epoch"})
+    if args.wandb:
+        wandb.init(project='GPT2 finetune', config={"x-axis": "epoch"})
 
     if args.model_name == "gpt2":
         tokenizer = GPT2Tokenizer.from_pretrained('./gpt2_model')
         model = GPT2LMHeadModel.from_pretrained('./gpt2_model')
+    elif args.model_name == "chinese":
+        tokenizer = AutoTokenizer.from_pretrained('./gpt2-chinese-cluecorpussmall')
+        model = GPT2LMHeadModel.from_pretrained('./gpt2-chinese-cluecorpussmall')
     else:
         raise NotImplementedError
 
     param_sizes = [p.numel() for p in model.parameters() if p.requires_grad]
     total_params = sum(param_sizes)
     print(f"Total number of parameters: {total_params / 1024 ** 2}M")
-
-    if args.dataset == "wiki2":
-        train_file = "wikitext-2/train.csv"
-        eval_file = "wikitext-2/test.csv"
-    elif args.dataset == "wiki103":
-        train_file = "wikitext-103-raw/wiki.train.raw"
-        eval_file = "wikitext-103-raw/wiki.valid.raw"
-        
+    
     lr = args.lr
     weight_decay = args.weight_decay
     warmup = args.warmup
@@ -44,21 +43,43 @@ def main(args):
     num_worker = args.num_worker
     max_seq_length = args.max_seq_length
     out_model_path = args.out_model_path
-
-    tokenizer.pad_token = tokenizer.eos_token
-
-    train_dataset = LineByLineTextDataset(
-        tokenizer=tokenizer,
-        file_path=train_file,
-        block_size=max_seq_length,
-    )
+    
+    # 确认并设置填充令牌
+    if not tokenizer.pad_token:
+        if tokenizer.eos_token:
+            tokenizer.add_special_tokens({'pad_token': tokenizer.eos_token})
+        else:
+            tokenizer.add_special_tokens({'pad_token': '[PAD]'})
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
-    eval_dataset = LineByLineTextDataset(
-        tokenizer=tokenizer,
-        file_path=eval_file,
-        block_size=max_seq_length,
-    )
+    if args.dataset.startswith("wiki"):
+        if args.dataset == "wiki2":
+            train_file = "wikitext-2/train.csv"
+            eval_file = "wikitext-2/test.csv"
+        elif args.dataset == "wiki103":
+            train_file = "wikitext-103/train.csv"
+            eval_file = "wikitext-103/test.csv"
+        
+        train_dataset = LineByLineTextDataset(
+            tokenizer=tokenizer,
+            file_path=train_file,
+            block_size=max_seq_length,
+        )
+        eval_dataset = LineByLineTextDataset(
+            tokenizer=tokenizer,
+            file_path=eval_file,
+            block_size=max_seq_length,
+        )
+    elif args.dataset == "chinese":
+        dataset = COIGDataset(data='./COIG-CQIA', tokenizer=tokenizer, max_length=max_seq_length, name=args.dataset_name)
+        
+        # split the dataset into train and eval
+        train_size = int(0.9 * len(dataset))
+        eval_size = len(dataset) - train_size
+        train_dataset, eval_dataset = torch.utils.data.random_split(dataset, [train_size, eval_size])
+        
+    else:
+        raise NotImplementedError
 
     print(f"Train dataset: {len(train_dataset)}")
     print(f"Test dataset: {len(eval_dataset)}")
@@ -115,7 +136,8 @@ def main(args):
             eval_loss.append(batch_loss.cpu().item())
 
         # 在验证循环结束后，记录验证损失到wandb
-        wandb.log({'Training Loss': loss / len(train_loader), 'Training Perplexity': train_perplexity, 'Validation Loss': np.mean(eval_loss), 'Perplexity': np.exp(np.mean(eval_loss)), 'Epoch': epoch + 1})
+        if args.wandb:
+            wandb.log({'Training Loss': loss / len(train_loader), 'Training Perplexity': train_perplexity, 'Validation Loss': np.mean(eval_loss), 'Perplexity': np.exp(np.mean(eval_loss)), 'Epoch': epoch + 1})
 
         eval_loss = np.mean(eval_loss)
         perplexity = np.exp(eval_loss)
@@ -142,6 +164,8 @@ if __name__ == "__main__":
     parser.add_argument("--num_worker", type=int, default=4, help="Number of workers for DataLoader")
     parser.add_argument("--max_seq_length", type=int, default=512, help="Maximum sequence length")
     parser.add_argument("--out_model_path", type=str, default="mygpt", help="Output model path")
+    parser.add_argument("--wandb", action='store_false', help="Use wandb or not")
+    parser.add_argument("--dataset_name", type=str, default="ruozhiba", help="Subset for Chinese Dataset")
     
     args = parser.parse_args()
     
