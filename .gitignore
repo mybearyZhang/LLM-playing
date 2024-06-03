@@ -1,13 +1,14 @@
 # model
 gpt2_model/
 gpt2-chinese-cluecorpussmall/
+longformer-base-4096/
+longformer_gpt2_model/
 
 # checkpoints
 checkpoints/
 runs/
 *.pkl
 epoch40/
-LongformerGPT2/gpt2_model
 LongformerGPT2/longformer-base-4096
 LongformerGPT2/longformer_gpt2_model
 
@@ -22,10 +23,7 @@ COIG-CQIA/
 logs/
 wandb/
 
-<<<<<<< HEAD
+# python cache
 .idea/
 */__pycache__/
-=======
-# python cache
 **/__pycache__/
->>>>>>> cf7d608ef99ee9e5d946d389ded2c6cf1fe61892
