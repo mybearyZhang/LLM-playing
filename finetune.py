@@ -75,7 +75,7 @@ def main(args):
             block_size=max_seq_length,
         )
     elif args.dataset == "chinese":
-        dataset = COIGDataset(data='./COIG-CQIA', tokenizer=tokenizer, max_length=max_seq_length, name=args.dataset_name)
+        dataset = COIGDataset(data='./COIG-CQIA', tokenizer=tokenizer, max_length=max_seq_length, name=args.dataset_name, answer_from=args.answer_from)
         
         # split the dataset into train and eval
         train_size = int(0.9 * len(dataset))
@@ -171,6 +171,7 @@ if __name__ == "__main__":
     parser.add_argument("--out_model_path", type=str, default="mygpt", help="Output model path")
     parser.add_argument("--wandb", action='store_false', help="Use wandb or not")
     parser.add_argument("--dataset_name", type=str, help="Subset for Chinese Dataset")
+    parser.add_argument("--answer_from", type=str, help="Answer from LLM or human")
     
     args = parser.parse_args()
     

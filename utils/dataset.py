@@ -3,11 +3,18 @@ from datasets import load_dataset
 from torch.utils.data import Dataset, DataLoader
 
 class COIGDataset(Dataset):
-    def __init__(self, data, tokenizer, max_length, name=None):
+    def __init__(self, data, tokenizer, max_length, name=None, answer_from=None):
         if name is not None:
-            self.data = load_dataset(data, name)['train']
+            dataset = load_dataset(data, name)['train']
         else:
-            self.data = load_dataset("json", data_files="./COIG-CQIA/COIG-CQIA-full.jsonl")['train']
+            print(data)
+            dataset = load_dataset("json", data_files='./COIG-CQIA/COIG-CQIA-full.jsonl')['train']
+        
+        if answer_from is not None:
+            self.data = dataset.filter(lambda example: example['answer_from'] == answer_from)
+        else:
+            self.data = dataset
+
         self.tokenizer = tokenizer
         self.max_length = max_length
 
