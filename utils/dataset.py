@@ -7,8 +7,7 @@ class COIGDataset(Dataset):
         if name is not None:
             self.data = load_dataset(data, name)['train']
         else:
-            self.data = load_dataset("./COIG-CQIA")['train']
-            raise NotImplementedError
+            self.data = load_dataset("json", data_files="./COIG-CQIA/COIG-CQIA-full.jsonl")['train']
         self.tokenizer = tokenizer
         self.max_length = max_length
 
