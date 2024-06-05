@@ -14,6 +14,7 @@ from transformers import GPT2Tokenizer, GPT2Model, AutoModel
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 from transformers import LineByLineTextDataset
+from utils.learningGPT2 import LearningGPT2
 
 def main(args):
     if args.model_name == "chinese":
@@ -30,6 +31,10 @@ def main(args):
         model = GPT2LMHeadModel.from_pretrained('./runs')
     elif model_name == "chinese":
         model = GPT2LMHeadModel.from_pretrained('./gpt2-chinese-cluecorpussmall')
+    elif model_name == 'learning':
+        model = LearningGPT2.from_pretrained('./checkpoints/learning')
+    else:
+        raise ValueError("Invalid model name")
 
     param_sizes = [p.numel() for p in model.parameters() if p.requires_grad]
     total_params = sum(param_sizes)
