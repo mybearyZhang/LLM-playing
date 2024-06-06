@@ -15,7 +15,7 @@ class LearnablePositionalEncoding(nn.Module):
         return self.positional_encoding[position_ids].squeeze(0)
 
 
-class learningGPT2(GPT2LMHeadModel):
+class LearningGPT2(GPT2LMHeadModel):
     def __init__(self, config):
-        super(learningGPT2, self).__init__(config)
+        super(LearningGPT2, self).__init__(config)
         self.transformer.wpe = LearnablePositionalEncoding(config.n_positions, config.n_embd)
