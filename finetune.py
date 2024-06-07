@@ -10,15 +10,16 @@ from time import time
 import wandb
 import argparse
 from transformers import AutoTokenizer, GPT2LMHeadModel, AutoConfig
-from transformers import GPT2Tokenizer, GPT2Model, AutoModel
+from transformers import GPT2Tokenizer, GPT2Model, AutoModel, GPT2Config
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 from transformers import LineByLineTextDataset
 from datasets import load_dataset
 from utils.dataset import COIGDataset
+from utils.learningGPT2 import learningGPT2
+
 
 def main(args):
-    # 初始化wandb，填入你的API密钥和项目名称
     if args.wandb:
         wandb.init(project='GPT2 finetune', config={"x-axis": "epoch"})
 
@@ -28,6 +29,9 @@ def main(args):
     elif args.model_name == "chinese":
         tokenizer = AutoTokenizer.from_pretrained('./gpt2-chinese-cluecorpussmall')
         model = GPT2LMHeadModel.from_pretrained('./gpt2-chinese-cluecorpussmall')
+    elif args.model_name == "learning":
+        tokenizer = GPT2Tokenizer.from_pretrained('./gpt2_model')
+        model = learningGPT2.from_pretrained('./gpt2_model', config=GPT2Config())
     else:
         raise NotImplementedError
 
@@ -71,7 +75,7 @@ def main(args):
             block_size=max_seq_length,
         )
     elif args.dataset == "chinese":
-        dataset = COIGDataset(data='./COIG-CQIA', tokenizer=tokenizer, max_length=max_seq_length, name=args.dataset_name)
+        dataset = COIGDataset(data='./COIG-CQIA', tokenizer=tokenizer, max_length=max_seq_length, name=args.dataset_name, answer_from=args.answer_from)
         
         # split the dataset into train and eval
         train_size = int(0.9 * len(dataset))
@@ -154,8 +158,8 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Finetune GPT-2 model")
     
-    parser.add_argument("--model_name", type=str, default="gpt2", help="Pretrained model name or path.")
-    parser.add_argument("--dataset", type=str, default="wiki2", help="Dataset to finetune on. ['wiki2', 'wiki103']")
+    parser.add_argument("--model_name", type=str, help="Pretrained model name or path.")
+    parser.add_argument("--dataset", type=str, help="Dataset to finetune on. ['wiki2', 'wiki103']")
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate")
     parser.add_argument("--weight_decay", type=float, default=1e-8, help="Weight decay")
     parser.add_argument("--warmup", type=float, default=2000, help="Warmup steps")
@@ -166,7 +170,8 @@ if __name__ == "__main__":
     parser.add_argument("--save_steps", type=int, default=0, help="Save model every n steps, 0 to disable")
     parser.add_argument("--out_model_path", type=str, default="mygpt", help="Output model path")
     parser.add_argument("--wandb", action='store_false', help="Use wandb or not")
-    parser.add_argument("--dataset_name", type=str, default="ruozhiba", help="Subset for Chinese Dataset")
+    parser.add_argument("--dataset_name", type=str, help="Subset for Chinese Dataset")
+    parser.add_argument("--answer_from", type=str, help="Answer from LLM or human")
     
     args = parser.parse_args()
     

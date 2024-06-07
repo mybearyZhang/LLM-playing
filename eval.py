@@ -14,14 +14,15 @@ from transformers import GPT2Tokenizer, GPT2Model, AutoModel
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 from transformers import LineByLineTextDataset
+from utils.learningGPT2 import LearningGPT2
 
 def main(args):
-    if args.model_name == "chinese":
+    model_name = args.model_name
+    if "chinese" in model_name:
         tokenizer = AutoTokenizer.from_pretrained('./gpt2-chinese-cluecorpussmall')
     else:
         tokenizer = GPT2Tokenizer.from_pretrained('./gpt2_model')
     
-    model_name = args.model_name
     if model_name == "gpt2":
         model = GPT2LMHeadModel.from_pretrained('./gpt2_model')
     elif model_name == "wiki2":
@@ -30,6 +31,13 @@ def main(args):
         model = GPT2LMHeadModel.from_pretrained('./runs')
     elif model_name == "chinese":
         model = GPT2LMHeadModel.from_pretrained('./gpt2-chinese-cluecorpussmall')
+    elif model_name == 'learning':
+        model = LearningGPT2.from_pretrained('./checkpoints/learning-1/checkpoints/epoch35')
+    elif model_name in ['chinese-xhs', 'chinese-wiki', 'chinese-traditional', 'chinese-ruozhiba', 'chinese-full']:
+        model_name = model_name.split("-")[1]
+        model = GPT2LMHeadModel.from_pretrained(f'./gpt2_model/{model_name}')
+    else:
+        raise ValueError("Invalid model name")
 
     param_sizes = [p.numel() for p in model.parameters() if p.requires_grad]
     total_params = sum(param_sizes)
@@ -46,8 +54,11 @@ def main(args):
         'poetry': "The morning sun casts its glow upon the lake, a gentle breeze stirs, carrying the scent of blossoms. The longing in my heart, like the ripples on the water...",
         'news': "Tech giant Apple has just unveiled its latest innovation:...",
         'knowledge': "The theory of evolution, first proposed by Charles Darwin, suggests that...",
-        # 'chinese': "在一个遥远的国度，有一位年轻的法师发现了一本古老的咒语书。有一天，他决定尝试书中的一个咒语，结果",
-        'chinese': "在一个遥远的国度，有一位年轻的法师发现了一本古老的咒语书。有一天，他突然突然发现孙雨林是神，结果",
+        'chinese-story': "在一个遥远的国度，有一位年轻的法师发现了一本古老的咒语书。有一天，他决定尝试书中的一个咒语，结果...",
+        "chinese-ruozhiba": "石油也是油，为啥没人用它来炒菜？这是因为...",
+        "chinese-traditional": "敝帚自珍的意思是...",
+        "chinese-xhs": "夏天这么热，有喝不完的饮料不是在做梦喔~今天分享的几款果冻饮品，简单好喝...",
+        "chinese-wiki": "维基百科，总部位于美国，是一个...",
     }
     
     # 获取选择的 input_text

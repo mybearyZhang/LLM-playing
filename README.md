@@ -7,6 +7,7 @@ This project allows users to finetune Large Language Models (LLMs) on custom dat
 - [Installation](#installation)
 - [Finetuning](#finetuning)
 - [Evaluation](#evaluation)
+- [Exploration for Attention](#exploration-for-attention)
 
 ## Installation
 
@@ -42,6 +43,9 @@ Here are the available command-line arguments you can use:
 + `--num_worker`: Number of workers for DataLoader (default: 4).
 + `--max_seq_length`: Maximum sequence length (default: 512).
 + `--out_model_path`: Output model path (default: "mygpt").
++ `--wandb`: Forbid Weights & Biases for logging.
++ `--dataset_name`: Subset name of the Chinese dataset.
++ `--answer_from`: Answer from the dataset (choices: "llm", "human", default for all).
 
 Here is an example commands to fine-tune the GPT-2 model:
     
@@ -59,7 +63,7 @@ python eval.py [arguments]
 Here are the available command-line arguments you can use:
 
 + `--model_name`: Pretrained model name or path (default: "gpt2").
-+ `--prompt`: Prompt for text generation, chosen from `['news', 'knowledge', 'story', 'conversation', 'poetry']`.
++ `--prompt`: Prompt for text generation, chosen from `['news', 'knowledge', 'story', 'conversation', 'poetry']`, chinese from `['chinese-story', 'chinese-ruozhiba', 'chinese-traditional', 'chinese-xhs', 'chinese-wiki']`.
 
 Here is an example command to evaluate the GPT-2 model:
 
@@ -72,3 +76,11 @@ Furthermore, we provide a script to evaluate the outputs of the model judged by 
 ```bash
 python llm_test.py
 ```
+
+## Exploration for Attention
+To run the exploration script of the model, use the following command format:
+
+```bash
+
+```
+[TODO]
