@@ -81,6 +81,11 @@ python llm_test.py
 To run the exploration script of the model, use the following command format:
 
 ```bash
+python main.py
+```
+The script will print out calculation time with input sequences of different lengths. You can also create a mixed pretrained model file.
 
 ```
-[TODO]
+python create_mix_model.py
+```
+
