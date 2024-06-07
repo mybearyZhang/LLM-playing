@@ -32,7 +32,7 @@ def main(args):
     elif model_name == "chinese":
         model = GPT2LMHeadModel.from_pretrained('./gpt2-chinese-cluecorpussmall')
     elif model_name == 'learning':
-        model = LearningGPT2.from_pretrained('./checkpoints/learning')
+        model = LearningGPT2.from_pretrained('./checkpoints/learning-1/checkpoints/epoch35')
     elif model_name in ['chinese-xhs', 'chinese-wiki', 'chinese-traditional', 'chinese-ruozhiba', 'chinese-full']:
         model_name = model_name.split("-")[1]
         model = GPT2LMHeadModel.from_pretrained(f'./gpt2_model/{model_name}')
@@ -49,11 +49,11 @@ def main(args):
 
     # 定义各个类别的 input_text
     input_texts = {
-        # 'story': "In a distant kingdom, a young wizard discovered an ancient book of spells. One day, he decided to try one of the spells from the book, and as a result...",
-        # 'conversation': "Reporter: Can you tell us how you began your career as an artist? Artist: It all started with a chance encounter when I was a child...",
-        # 'poetry': "The morning sun casts its glow upon the lake, a gentle breeze stirs, carrying the scent of blossoms. The longing in my heart, like the ripples on the water...",
-        # 'news': "Tech giant Apple has just unveiled its latest innovation:...",
-        # 'knowledge': "The theory of evolution, first proposed by Charles Darwin, suggests that...",
+        'story': "In a distant kingdom, a young wizard discovered an ancient book of spells. One day, he decided to try one of the spells from the book, and as a result...",
+        'conversation': "Reporter: Can you tell us how you began your career as an artist? Artist: It all started with a chance encounter when I was a child...",
+        'poetry': "The morning sun casts its glow upon the lake, a gentle breeze stirs, carrying the scent of blossoms. The longing in my heart, like the ripples on the water...",
+        'news': "Tech giant Apple has just unveiled its latest innovation:...",
+        'knowledge': "The theory of evolution, first proposed by Charles Darwin, suggests that...",
         'chinese-story': "在一个遥远的国度，有一位年轻的法师发现了一本古老的咒语书。有一天，他决定尝试书中的一个咒语，结果...",
         "chinese-ruozhiba": "石油也是油，为啥没人用它来炒菜？这是因为...",
         "chinese-traditional": "敝帚自珍的意思是...",
